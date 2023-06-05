@@ -26,3 +26,15 @@ python main.py
 ```bash
 alembic revision -m "nome da migração"
 ```
+
+## Migrate Up
+
+```bash
+alembic upgrade head
+```
+
+## Migrate Down
+
+```bash
+alembic downgrade -1
+```
