@@ -20,7 +20,7 @@ if config.config_file_name is not None:
 # target_metadata = mymodel.Base.metadata
 target_metadata = None
 
-db_url = 'mysql+pymysql://root:password@localhost:3306/school'
+db_url = 'mysql+pymysql://root:1234@localhost:3306/school'
 config.set_main_option('sqlalchemy.url', db_url)
 
 # other values from the config, defined by the needs of env.py,

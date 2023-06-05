@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker
 class DBConnectionHandler:
     '''Class to handle the connection with the database'''
     def __init__(self):
-        self.__engine = create_engine('mysql+pymysql://root:password@localhost:3306/cinema')
+        self.__engine = create_engine('mysql+pymysql://root:1234@localhost:3306/school')
         self.__session = None
 
     @property
