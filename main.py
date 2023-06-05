@@ -1,6 +1,5 @@
 import sys
 import os
-from school.repositories.setores_repository import SetoresRepository
 
 
 def main():
