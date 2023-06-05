@@ -30,11 +30,11 @@ alembic revision -m "nome da migração"
 ## Migrate Up
 
 ```bash
-alembic upgrade head
+python main.py migrate up
 ```
 
 ## Migrate Down
 
 ```bash
-alembic downgrade -1
+python main.py migrate down
 ```
