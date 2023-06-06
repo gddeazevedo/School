@@ -24,7 +24,7 @@ def upgrade() -> None:
         sa.Column('nome', sa.String(length=50), nullable=False),
         sa.Column('endereco', sa.String(100), nullable=False),
         sa.Column('salario', sa.Float, nullable=False),
-        sa.Column('cod_setor', sa.Integer, sa.ForeignKey('setores.cod_setor'))
+        sa.Column('cod_setor', sa.Integer, sa.ForeignKey('setores.cod_setor', ondelete="CASCADE"))
     )
 
 
