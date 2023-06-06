@@ -1,8 +1,8 @@
 """create setores table
 
-Revision ID: ef654b3ddf76
+Revision ID: b48ed2ae56cc
 Revises: 
-Create Date: 2023-06-05 18:42:32.956922
+Create Date: 2023-06-05 22:03:27.768005
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'ef654b3ddf76'
+revision = 'b48ed2ae56cc'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -20,7 +20,7 @@ def upgrade() -> None:
     op.create_table(
         'setores',
         sa.Column('cod_setor', sa.Integer, primary_key=True),
-        sa.Column('nome', sa.String(length=50), nullable=False)
+        sa.Column('nome', sa.String(length=50), nullable=False)   
     )
 
 
