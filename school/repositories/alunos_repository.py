@@ -27,7 +27,7 @@ class AlunosRepository:
             except Exception as e:
                 print(e)
                 return None
-    
+
     @staticmethod
     def update(cpf: str, **new_values) -> None:
          with DBConnectionHandler() as db:
