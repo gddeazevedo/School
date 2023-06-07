@@ -1,5 +1,6 @@
 from ..config.db_connection_handler import DBConnectionHandler
 from ..models import Setor
+from typing import Optional
 
 
 class SetoresRepository:
@@ -7,9 +8,19 @@ class SetoresRepository:
     def select_all() -> list[Setor]:
         with DBConnectionHandler() as db:
             return db.session.query(Setor).all()
+  
 
     @staticmethod
-    def insert(nome: str, cod_setor: int = None) -> None:
+    def select_by_cod_setor(cod_setor: int) -> Setor | list[Setor] | None:
+        with DBConnectionHandler() as db:
+            try:
+                return db.session.query(Setor).filter(Setor.cod_setor == cod_setor).first()
+            except Exception as e:
+                print(e)
+                return None
+
+    @staticmethod
+    def insert(nome: str, cod_setor: Optional[int] = None) -> None:
         with DBConnectionHandler() as db:
             try:
                 new_setor = Setor(cod_setor=cod_setor, nome=nome)
