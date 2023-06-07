@@ -1,7 +1,6 @@
 import sys
 import os
-from school.repositories.setores_repository import SetoresRepository
-from school.repositories.funcionarios_repository import FuncionariosRepository
+from school.cli.cli import cli
 
 
 def main():
@@ -20,17 +19,7 @@ def main():
             else:
                 os.system(command)
         else:
-            print('Running CLI')
-            # SetoresRepository.insert('Setor1')
-            FuncionariosRepository.insert(
-                cpf='11111111111',
-                nome='Funcionario 1',
-                endereco='Rua Legal numero 42',
-                salario=1234.59,
-                cod_setor=3
-            )
-            print(SetoresRepository.select_all())
-            print(FuncionariosRepository.select_all())
+            cli()
 
     except Exception as e:
         print('Invalid command')
