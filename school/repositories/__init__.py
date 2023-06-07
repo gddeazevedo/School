@@ -1,0 +1,6 @@
+from .funcionarios_repository import FuncionariosRepository
+from .setores_repository import SetoresRepository
+from .cursos_repository import CursosRepository
+from .professores_repository import ProfessoresRepository
+from .alunos_repository import AlunosRepository
+from .disciplinas_repository import DisciplinasRepository
