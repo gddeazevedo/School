@@ -28,7 +28,7 @@ def upgrade() -> None:
         sa.Column(
             'cpf_aluno',
             sa.String(length=11),
-            sa.ForeignKey('alunos.cpf'),
+            sa.ForeignKey('alunos.cpf', ondelete='CASCADE'),
             primary_key=True
         ),
         sa.Column('nota', sa.Float, nullable=False),
