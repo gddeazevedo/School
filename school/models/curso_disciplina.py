@@ -2,7 +2,6 @@ from sqlalchemy import Table, Column, ForeignKey, Integer
 from ..config.base import Base
 
 
-
 class CursoDisciplina(Base):
     __tablename__ = 'cursos_disciplinas'
 
