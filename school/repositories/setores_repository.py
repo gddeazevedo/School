@@ -11,7 +11,7 @@ class SetoresRepository:
   
 
     @staticmethod
-    def select_by_cod_setor(cod_setor: int) -> Setor | list[Setor] | None:
+    def select_by_cod_setor(cod_setor: int) -> Setor | None:
         with DBConnectionHandler() as db:
             try:
                 return db.session.query(Setor).filter(Setor.cod_setor == cod_setor).first()
