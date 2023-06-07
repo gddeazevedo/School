@@ -1,7 +1,7 @@
 from ..repositories import *
 from ..models import *
+from datetime import datetime
 
 
 def cli():
-    # SetoresRepository.insert(input('Digite o nome do setor: '))
     pass
