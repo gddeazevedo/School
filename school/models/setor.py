@@ -9,7 +9,7 @@ class Setor(Base):
     cod_setor = Column(Integer, primary_key=True)
     nome = Column(String(length=50), nullable=False)
 
-    funcionarios = relationship("Funcionario", back_populates="setor")
+    funcionarios = relationship("Funcionario", back_populates="setor", lazy="joined")
 
     def __repr__(self) -> str:
-        return f'Setor(cod_setor={self.cod_setor}), nome={self.nome}'
+        return f'Setor(cod_setor={self.cod_setor}, nome={self.nome})'

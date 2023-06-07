@@ -10,9 +10,9 @@ class Funcionario(Base):
     nome = Column(String(length=50), nullable=False)
     endereco = Column(String(100), nullable=False)
     salario = Column(Float, nullable=False)
-    cod_setor = Column(Integer, ForeignKey('setores.cod_setor'))
+    cod_setor = Column(Integer, ForeignKey('setores.cod_setor', ondelete='CASCADE'))
 
-    setor = relationship('Setor', back_populates='funcionarios')
+    setor = relationship('Setor', back_populates='funcionarios', lazy="joined")
 
     def __repr__(self) -> str:
         return f'Funcionario(cpf={self.cpf}, nome={self.nome})'
