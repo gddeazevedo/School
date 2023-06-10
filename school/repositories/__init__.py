@@ -4,3 +4,4 @@ from .cursos_repository import CursosRepository
 from .professores_repository import ProfessoresRepository
 from .alunos_repository import AlunosRepository
 from .disciplinas_repository import DisciplinasRepository
+from .inscritos_repository import InscritosRepository
