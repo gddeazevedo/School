@@ -31,8 +31,8 @@ def upgrade() -> None:
             sa.ForeignKey('alunos.cpf', ondelete='CASCADE'),
             primary_key=True
         ),
-        sa.Column('nota', sa.Float, nullable=False),
-        sa.Column('vez', sa.Integer, nullable=False)
+        sa.Column('nota', sa.Float, nullable=True),
+        sa.Column('vez', sa.Integer, nullable=False, default=1)
     )
 
 
