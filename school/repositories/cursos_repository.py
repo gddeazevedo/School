@@ -1,6 +1,7 @@
 from ..config.db_connection_handler import DBConnectionHandler
 from ..models import Curso
-import datetime
+from typing import Optional
+
 
 class CursosRepository:
     @staticmethod
@@ -20,36 +21,42 @@ class CursosRepository:
                 return None
 
     @staticmethod
-    def insert(nome: str, ano_inicio: datetime.datetime) -> None:
+    def insert(nome: str, ano_inicio: int, cod_curso: Optional[int] = None) -> bool:
         with DBConnectionHandler() as db:
             try:
                 new_curso = Curso(
-                    cod_curso=None,
+                    cod_curso=cod_curso,
                     nome=nome,
                     ano_inicio=ano_inicio
                 )
                 db.session.add(new_curso)
                 db.session.commit()
+                return True
             except Exception as e:
                 print(e)
+                return False
 
     @staticmethod
-    def update(cod_curso: int, **new_values) -> None:
+    def update(cod_curso: int, **new_values) -> bool:
         with DBConnectionHandler() as db:
             try:
                 db.session.query(Curso)\
                     .filter(Curso.cod_curso == cod_curso)\
                     .update(new_values)
                 db.session.commit()
+                return True
             except Exception as e:
                 print(e)
+                return False
 
     @staticmethod
-    def delete(cod_curso: int) -> None:
+    def delete(cod_curso: int) -> bool:
         with DBConnectionHandler() as db:
             try:
                 db.session.query(Curso)\
                     .filter(Curso.cod_curso == cod_curso).delete()
                 db.session.commit()
+                return True
             except Exception as e:
                 print(e)
+                return False
