@@ -19,7 +19,7 @@ class ProfessoresRepository:
                 return None
 
     @staticmethod
-    def insert(cpf: str, nome: str, telefone: str, endereco: str, data_contratacao: datetime.datetime, salario: float, ativo: bool, cod_curso: int) -> None:
+    def insert(cpf: str, nome: str, telefone: str, endereco: str, data_contratacao: datetime.datetime, salario: float, ativo: bool, cod_curso: int) -> bool:
         with DBConnectionHandler() as db:
             try:
                 new_professor = Professor(
@@ -34,26 +34,32 @@ class ProfessoresRepository:
                 )
                 db.session.add(new_professor)
                 db.session.commit()
+                return True
             except Exception as e:
                 print(e)
+                return False
 
     @staticmethod
-    def update(cpf: str, **new_values) -> None:
+    def update(cpf: str, **new_values) -> bool:
         with DBConnectionHandler() as db:
             try:
                 db.session.query(Professor)\
                     .filter(Professor.cpf == cpf)\
                     .update(new_values)
                 db.session.commit()
+                return True
             except Exception as e:
                 print(e)
+                return False
 
     @staticmethod
-    def delete(cpf: str):
+    def delete(cpf: str) -> bool:
         with DBConnectionHandler() as db:
             try:
                 db.session.query(Professor)\
                     .filter(Professor.cpf == cpf).delete()
                 db.session.commit()
+                return True
             except Exception as e:
                 print(e)
+                return False

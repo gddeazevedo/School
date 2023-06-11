@@ -80,8 +80,56 @@ def insert_funcionario():
 
 
 def insert_professor():
-    print('Cadastrar professor')
-    input()
+    while True:
+        print('Cadastrar professor')
+        cpf = input('Digite o CPF do professor: ')
+
+        while len(cpf) != 11:
+            print('CPF inválido! Tente novamente')
+            cpf = input('Digite o CPF do professor: ')
+
+        nome = input('Digite o nome do professor: ')
+        telefone = input('Digite o telefone do professor: ') 
+        endereco = input('Digite o endereço do professor: ')
+        data_contratacao = input('Digite a data de contratação do professor: ')
+        salario = float(input('Digite o salário do professor: '))
+        ativo = input('Digite se é ativo (0 inativo, 1 ativo): ')
+
+        if ativo == '0':
+            ativo = False
+        else:
+            ativo = True
+
+        while True:
+            cod_curso = int(input('Digite o código do curso: '))
+
+            curso = repos.CursosRepository.select_by_cod_curso(cod_curso)
+
+            if curso == None:
+                print('Curso inexistente! Por favor tente novamente!')
+            else:
+                break
+
+        inserted = repos.ProfessoresRepository.insert(
+            cpf=cpf,
+            nome=nome,
+            telefone=telefone,
+            endereco=endereco,
+            data_contratacao=data_contratacao,
+            salario=salario,
+            ativo=ativo,
+            cod_curso=cod_curso
+        )
+
+        if inserted:
+            print('Professor cadastrado com sucesso!')
+            input('Aperte enter para sair!')
+            os.system('clear')
+            return
+        else:
+            print('Erro ao cadastrar o professor! Tente novamente!')
+            input('Aperte enter para tentar de novo!')
+            os.system('clear')
 
 
 def insert_aluno():
