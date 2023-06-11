@@ -15,8 +15,8 @@ class Inscrito(Base):
         ForeignKey('alunos.cpf', ondelete='CASCADE'),
         primary_key=True
     )
-    nota = Column(Float, nullable=False, default=0)
-    vez = Column(Integer, nullable=False)
+    nota = Column(Float, nullable=True, default=0)
+    vez = Column(Integer, nullable=False, default=1)
 
     def __repr__(self) -> str:
         return f'Inscrito(cod_disciplia={self.cod_disciplina}, cpf_aluno={self.cpf_aluno}, nota={self.nota}, vez={self.vez})'
