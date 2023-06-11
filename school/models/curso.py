@@ -8,7 +8,7 @@ class Curso(Base):
 
     cod_curso = Column(Integer, primary_key=True)
     nome = Column(String(length=50), nullable=False, unique=True)
-    ano_inicio = Column(DateTime, nullable=False)
+    ano_inicio = Column(Integer, nullable=False)
 
     professores = relationship('Professor', back_populates='curso', lazy='joined')
 
