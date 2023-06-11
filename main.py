@@ -6,7 +6,7 @@ from school.cli import cli
 def main():
     commands = {
         'migrate up': 'alembic upgrade head',
-        'migrate down': 'alembic downgrade -1',
+        'migrate down': 'alembic downgrade base',
         'generate migration': 'alembic revision -m '
     }
     try:
