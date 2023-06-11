@@ -20,32 +20,47 @@ class SetoresRepository:
                 return None
 
     @staticmethod
-    def insert(nome: str, cod_setor: Optional[int] = None) -> None:
+    def select_by_nome(nome: str) -> Setor | None:
+        with DBConnectionHandler() as db:
+            try:
+                return db.session.query(Setor).filter(Setor.nome == nome).first()
+            except Exception as e:
+                print(e)
+                return None
+
+    @staticmethod
+    def insert(nome: str, cod_setor: Optional[int] = None) -> bool:
         with DBConnectionHandler() as db:
             try:
                 new_setor = Setor(cod_setor=cod_setor, nome=nome)
                 db.session.add(new_setor)
                 db.session.commit()
+                return True
             except Exception as e:
                 print(e)
+                return False
 
     @staticmethod
-    def update(cod_setor: int, **new_values) -> None:
+    def update(cod_setor: int, **new_values) -> bool:
         with DBConnectionHandler() as db:
             try:
                 db.session.query(Setor)\
                     .filter(Setor.cod_setor == cod_setor)\
                     .update(new_values)
                 db.session.commit()
+                return True
             except Exception as e:
                 print(e)
+                return False
 
     @staticmethod
-    def delete(cod_setor: int):
+    def delete(cod_setor: int) -> bool:
         with DBConnectionHandler() as db:
             try:
                 db.session.query(Setor)\
                     .filter(Setor.cod_setor == cod_setor).delete()
                 db.session.commit()
+                return True
             except Exception as e:
                 print(e)
+                return False
