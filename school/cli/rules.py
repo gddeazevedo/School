@@ -211,8 +211,41 @@ def insert_disciplina():
 
 
 def inscrever_aluno():
-    print('Inscrever aluno em uma disciplina')
-    input()
+    while True:
+        print('Inscrever aluno')
+
+        while True:
+            cpf_aluno = input('Digite o CPF do aluno: ')
+
+            if len(cpf_aluno) != 11:
+                print('CPF inválido! Tente novamente')
+                continue
+
+            aluno = repos.AlunosRepository.select_by_cpf(cpf_aluno)
+
+            if aluno == None:
+                print('Aluno inexistente! Por favor tente novamente!')
+            else:
+                break
+
+
+        while True:
+            cod_disciplina = int(input('Digite o código da disciplina: '))
+            disciplina = repos.DisciplinasRepository.select_by_cod_disciplina(cod_disciplina)
+
+            if disciplina == None:
+                print('Disciplina inexistente! Tente novamente')
+            else:
+                break
+
+        if repos.InscritosRepository.insert(cpf_aluno, cod_disciplina, 0.0, 1):
+            print('Aluno cadastrado com sucesso!')
+            input('Aperte enter para sair')
+            return
+        else:
+            print('Erro ao inscrever o aluno! Tente novamente!')
+            input('Aperte enter para tentar de novo!')
+            os.system('clear')
 
 
 def lancar_nota():

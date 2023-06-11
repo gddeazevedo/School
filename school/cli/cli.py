@@ -42,3 +42,4 @@ def start():
 
         os.system('clear')
         action()
+        os.system('clear')
