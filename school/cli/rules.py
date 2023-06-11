@@ -133,8 +133,41 @@ def insert_professor():
 
 
 def insert_aluno():
-    print('Cadastrar aluno')
-    input()
+    while True:
+        print('Cadastrar aluno')
+        cpf = input('Digite o CPF do aluno: ')
+
+        while len(cpf) != 11:
+            print('CPF inválido! Tente novamente')
+            cpf = input('Digite o CPF do aluno: ')
+
+        nome = input('Digite o nome do aluno: ')
+        telefone = input('Digite o telefone do aluno: ') 
+        endereco = input('Digite o endereço do aluno: ')
+        ativo = input('Digite se é ativo (0 inativo, 1 ativo): ')
+
+        if ativo == '0':
+            ativo = False
+        else:
+            ativo = True
+
+        inserted = repos.AlunosRepository.insert(
+            cpf=cpf,
+            nome=nome,
+            telefone=telefone,
+            endereco=endereco,
+            ativo=ativo
+        )
+
+        if inserted:
+            print('Aluno cadastrado com sucesso!')
+            input('Aperte enter para sair!')
+            os.system('clear')
+            return
+        else:
+            print('Erro ao cadastrar o aluno! Tente novamente!')
+            input('Aperte enter para tentar de novo!')
+            os.system('clear')
 
 
 def insert_disciplina():

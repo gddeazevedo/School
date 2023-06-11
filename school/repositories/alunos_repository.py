@@ -18,36 +18,39 @@ class AlunosRepository:
                 return None
 
     @staticmethod
-    def insert(cpf: str, nome: str, telefone: str, endereco: str, ativo: bool) -> None:
+    def insert(cpf: str, nome: str, telefone: str, endereco: str, ativo: bool) -> bool:
         with DBConnectionHandler() as db:
             try:
                 new_aluno = Aluno(cpf=cpf, nome=nome, telefone=telefone, endereco=endereco, ativo=ativo)
                 db.session.add(new_aluno)
                 db.session.commit()
+                return True
             except Exception as e:
                 print(e)
-                return None
+                return False
 
     @staticmethod
-    def update(cpf: str, **new_values) -> None:
+    def update(cpf: str, **new_values) -> bool:
          with DBConnectionHandler() as db:
             try:
                 db.session.query(Aluno)\
                     .filter(Aluno.cpf == cpf)\
                     .update(new_values)
                 db.session.commit()
+                return True
             except Exception as e:
                 print(e)
-                return None
+                return False
 
     @staticmethod
-    def delete(cpf: str) -> None:
+    def delete(cpf: str) -> bool:
         with DBConnectionHandler() as db:
             try:
                 db.session.query(Aluno)\
                     .filter(Aluno.cpf == cpf)\
                     .delete()
                 db.session.commit()
+                return True
             except Exception as e:
                 print(e)
-                return None
+                return False
