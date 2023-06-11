@@ -171,8 +171,43 @@ def insert_aluno():
 
 
 def insert_disciplina():
-    print('Cadastrar disciplina')
-    input()
+    while True:
+        print('Cadastrar disciplina')
+
+        cod_disciplina = int(input('Digite o código da disciplina: '))
+        nome = input('Digite o nome da disciplina: ')
+
+        cpf_professor = None
+
+        while True:
+            cpf_professor = input('Digite o CPF do professor: ')
+
+            if len(cpf_professor) != 11:
+                print('CPF inválido! Tente novamente')
+                continue
+
+            professor = repos.ProfessoresRepository.select_by_cpf(cpf_professor)
+
+            if professor == None:
+                print('Professor inexistente! Por favor tente novamente!')
+            else:
+                break
+
+        inserted = repos.DisciplinasRepository.insert(
+            cod_disciplina=cod_disciplina,
+            cpf_professor=cpf_professor,
+            nome=nome
+        )
+
+        if inserted:
+            print('Disciplina cadastrada com sucesso!')
+            input('Aperte enter para sair!')
+            os.system('clear')
+            return
+        else:
+            print('Erro ao cadastrar a disciplina! Tente novamente!')
+            input('Aperte enter para tentar de novo!')
+            os.system('clear')
 
 
 def inscrever_aluno():
