@@ -21,7 +21,7 @@ def upgrade() -> None:
         'cursos',
         sa.Column('cod_curso', sa.Integer, primary_key=True),
         sa.Column('nome', sa.String(length=50), nullable=False, unique=True),
-        sa.Column('ano_inicio', sa.DateTime, nullable=False)
+        sa.Column('ano_inicio', sa.Integer, nullable=False)
     )
 
 
