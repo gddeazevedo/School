@@ -228,7 +228,6 @@ def inscrever_aluno():
             else:
                 break
 
-
         while True:
             cod_disciplina = int(input('Digite o código da disciplina: '))
             disciplina = repos.DisciplinasRepository.select_by_cod_disciplina(cod_disciplina)
@@ -249,5 +248,44 @@ def inscrever_aluno():
 
 
 def lancar_nota():
-    print('Lançar nota')
-    input()
+    while True:
+        print('Lançar nota')
+
+        while True:
+            cpf_aluno = input('Digite o CPF do aluno: ')
+
+            if len(cpf_aluno) != 11:
+                print('CPF inválido! Tente novamente')
+                continue
+
+            aluno = repos.AlunosRepository.select_by_cpf(cpf_aluno)
+
+            if aluno == None:
+                print('Aluno inexistente! Por favor tente novamente!')
+            else:
+                break
+
+
+        while True:
+            cod_disciplina = int(input('Digite o código da disciplina: '))
+            disciplina = repos.DisciplinasRepository.select_by_cod_disciplina(cod_disciplina)
+
+            if disciplina == None:
+                print('Disciplina inexistente! Tente novamente')
+            else:
+                break
+
+        nota = float(input('Digite a nota: '))
+
+        while nota < 0 or nota > 10:
+            print('Nota inválida! Tente novamente!')
+            nota = float(input('Digite a nota: '))
+
+        if repos.InscritosRepository.update(cpf_aluno, cod_disciplina, nota=nota):
+            print('Nota lançada com sucesso')
+            input('Aperte enter para sair')
+            return
+        else:
+            print('Erro ao lançar a nota! Tente novamente!')
+            input('Aperte enter para tentar de novo!')
+            os.system('clear')
