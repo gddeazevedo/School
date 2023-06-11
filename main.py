@@ -1,6 +1,6 @@
 import sys
 import os
-from school.cli.cli import cli
+from school.cli import cli
 
 
 def main():
@@ -19,8 +19,7 @@ def main():
             else:
                 os.system(command)
         else:
-            cli()
-
+            cli.start()
     except Exception as e:
         print('Invalid command')
         print(e)
