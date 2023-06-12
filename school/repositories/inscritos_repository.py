@@ -1,5 +1,6 @@
 from ..config.db_connection_handler import DBConnectionHandler
 from ..models import Inscrito
+import sqlalchemy as sa
 
 
 class InscritosRepository:
@@ -12,9 +13,9 @@ class InscritosRepository:
     def select_by_cpf_aluno_and_cod_disciplina(cpf_aluno: str, cod_disciplina: int) -> Inscrito | None:
         with DBConnectionHandler() as db:
             try:
-                return db.session.query(Inscrito).filter(
-                    Inscrito.cod_disciplina == cod_disciplina and Inscrito.cpf_aluno == cpf_aluno
-                ).first()
+                return db.session.query(Inscrito)\
+                    .filter(sa.and_(Inscrito.cpf_aluno == cpf_aluno, Inscrito.cod_disciplina == cod_disciplina))\
+                    .first()
             except Exception as e:
                 print(e)
                 return None
