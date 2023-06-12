@@ -20,7 +20,7 @@ def upgrade() -> None:
     op.create_table(
         'disciplinas',
         sa.Column('cod_disciplina', sa.Integer, primary_key=True),
-        sa.Column('nome', sa.String(length=50), nullable=False, unique=True),
+        sa.Column('nome', sa.String(length=50), nullable=False),
         sa.Column(
             'cpf_professor',
             sa.String(length=11),
