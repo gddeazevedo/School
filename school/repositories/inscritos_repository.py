@@ -14,7 +14,7 @@ class InscritosRepository:
             try:
                 return db.session.query(Inscrito).filter(
                     Inscrito.cod_disciplina == cod_disciplina and Inscrito.cpf_aluno == cpf_aluno
-                )
+                ).first()
             except Exception as e:
                 print(e)
                 return None
