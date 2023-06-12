@@ -1,13 +1,15 @@
 import sys
 import os
-from school.cli import cli
+from school.cli import cli, seed
 
 
 def main():
     commands = {
         'migrate up': 'alembic upgrade head',
         'migrate down': 'alembic downgrade base',
-        'generate migration': 'alembic revision -m '
+        'generate migration': 'alembic revision -m ',
+        'seed': seed.seed_all_db,
+        'start': cli.start
     }
     try:
         if len(sys.argv) > 2:
@@ -19,7 +21,7 @@ def main():
             else:
                 os.system(command)
         else:
-            cli.start()
+            commands[sys.argv[1]]()
     except Exception as e:
         print('Invalid command')
         print(e)
