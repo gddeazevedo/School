@@ -313,6 +313,16 @@ def lancar_nota():
             print('Nota inválida! Tente novamente!')
             nota = float(input('Digite a nota: '))
 
+
+        inscrito = repos.InscritosRepository.select_by_cpf_aluno_and_cod_disciplina(
+            cpf_aluno=cpf_aluno, cod_disciplina=cod_disciplina
+        )
+
+        if inscrito == None:
+            input('Este aluno não está inscrito nesta disciplina! Por favor, tente novamente!')
+            os.system('clear')
+            continue
+
         if repos.InscritosRepository.update(cpf_aluno, cod_disciplina, nota=nota):
             print('Nota lançada com sucesso')
             input('Aperte enter para sair')
