@@ -226,6 +226,11 @@ def inscrever_aluno():
             if aluno == None:
                 print('Aluno inexistente! Por favor tente novamente!')
             else:
+                if not aluno.ativo:
+                    print('Aluno não está mais ativo!')
+                    input('Aperte enter para continuar!')
+                    os.system('clear')
+                    return
                 break
 
         while True:
@@ -237,14 +242,37 @@ def inscrever_aluno():
             else:
                 break
 
-        if repos.InscritosRepository.insert(cpf_aluno, cod_disciplina, 0.0, 1):
-            print('Aluno cadastrado com sucesso!')
-            input('Aperte enter para sair')
-            return
+        inscrito = repos.InscritosRepository.select_by_cpf_aluno_and_cod_disciplina(
+            cpf_aluno=cpf_aluno, cod_disciplina=cod_disciplina
+        )
+
+        if inscrito == None:
+            if repos.InscritosRepository.insert(cpf_aluno, cod_disciplina, 0.0, 1):
+                print('Aluno cadastrado com sucesso!')
+                input('Aperte enter para sair')
+                return
+            else:
+                print('Erro ao inscrever o aluno! Tente novamente!')
+                input('Aperte enter para tentar de novo!')
+                os.system('clear')
         else:
-            print('Erro ao inscrever o aluno! Tente novamente!')
-            input('Aperte enter para tentar de novo!')
-            os.system('clear')
+            if inscrito.vez < 3:
+                repos.InscritosRepository.update(
+                    cpf_aluno=cpf_aluno,
+                    cod_disciplina=cod_disciplina,
+                    vez=inscrito.vez + 1
+                )
+                print('Aluno já estava inscrito e foi inscrito novamente!')
+                input('Aperte enter para sair')
+                return
+            else:
+                if aluno.ativo:
+                    repos.AlunosRepository.update(cpf_aluno, ativo=False)
+
+                print('Aluno não está mais ativo!')
+                input('Aperte enter para continuar!')
+                os.system('clear')
+                return
 
 
 def lancar_nota():
@@ -263,8 +291,12 @@ def lancar_nota():
             if aluno == None:
                 print('Aluno inexistente! Por favor tente novamente!')
             else:
+                if not aluno.ativo:
+                    print('Aluno não está mais ativo!')
+                    input('Aperte enter para continuar!')
+                    os.system('clear')
+                    return
                 break
-
 
         while True:
             cod_disciplina = int(input('Digite o código da disciplina: '))
