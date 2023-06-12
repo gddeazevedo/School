@@ -20,7 +20,7 @@ def upgrade() -> None:
     op.create_table(
         'alunos',
         sa.Column('cpf', sa.String(length=11), primary_key=True),
-        sa.Column('nome', sa.String(length=11), nullable=False),
+        sa.Column('nome', sa.String(length=50), nullable=False),
         sa.Column('telefone', sa.String(length=11), nullable=False),
         sa.Column('endereco', sa.String(length=100), nullable=False),
         sa.Column('ativo', sa.Boolean, nullable=False)
