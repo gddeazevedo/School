@@ -19,7 +19,7 @@ class ProfessoresRepository:
                 return None
 
     @staticmethod
-    def insert(cpf: str, nome: str, telefone: str, endereco: str, data_contratacao: datetime.datetime, salario: float, ativo: bool, cod_curso: int) -> bool:
+    def insert(cpf: str, nome: str, telefone: str, endereco: str, data_contratacao: datetime.date, salario: float, ativo: bool, cod_curso: int) -> bool:
         with DBConnectionHandler() as db:
             try:
                 new_professor = Professor(
