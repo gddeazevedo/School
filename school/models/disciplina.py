@@ -11,6 +11,7 @@ class Disciplina(Base):
     cpf_professor = Column(String(length=11), ForeignKey('professores.cpf', ondelete='CASCADE'))
 
     professor = relationship('Professor', back_populates='disciplinas', lazy='joined')
+    inscritos = relationship('Inscrito', lazy='joined')
 
     def __repr__(self) -> str:
         return f'Disciplina(cod_disciplina={self.cod_disciplina}, nome={self.nome})'
