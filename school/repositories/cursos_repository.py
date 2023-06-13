@@ -64,7 +64,7 @@ class CursosRepository:
                 return False
 
     @staticmethod
-    def get_qtd_professores_ativos_by_curso():
+    def get_qtd_professores_ativos_by_curso() -> tuple[int | bool | str]:
         with DBConnectionHandler() as db:
             query = sa.select(Curso.cod_curso, Curso.nome, func.count(Professor.cpf))\
                 .join(Curso.professores)\
@@ -74,7 +74,7 @@ class CursosRepository:
             return db.session.execute(query)
 
     @staticmethod
-    def get_media_salario_by_curso():
+    def get_media_salario_by_curso() -> tuple[int | bool | str]:
         with DBConnectionHandler() as db:
             query = sa.select(Curso.cod_curso, Curso.nome, func.avg(Professor.salario))\
                 .join(Curso.professores)\
