@@ -18,10 +18,10 @@ class AlunosRepository:
                 return None
 
     @staticmethod
-    def insert(cpf: str, nome: str, telefone: str, endereco: str, ativo: bool) -> bool:
+    def insert(cpf: str, nome: str, telefone: str, endereco: str, ativo: bool, cod_curso: int) -> bool:
         with DBConnectionHandler() as db:
             try:
-                new_aluno = Aluno(cpf=cpf, nome=nome, telefone=telefone, endereco=endereco, ativo=ativo)
+                new_aluno = Aluno(cpf=cpf, nome=nome, telefone=telefone, endereco=endereco, ativo=ativo, cod_curso=cod_curso)
                 db.session.add(new_aluno)
                 db.session.commit()
                 return True
