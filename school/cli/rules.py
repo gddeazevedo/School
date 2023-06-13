@@ -151,12 +151,24 @@ def insert_aluno():
         else:
             ativo = True
 
+        while True:
+            cod_curso = int(input('Digite o código do curso: '))
+
+            curso = repos.CursosRepository.select_by_cod_curso(cod_curso)
+
+            if curso == None:
+                print('Curso inexistente! Por favor tente novamente!')
+            else:
+                break
+
+
         inserted = repos.AlunosRepository.insert(
             cpf=cpf,
             nome=nome,
             telefone=telefone,
             endereco=endereco,
-            ativo=ativo
+            ativo=ativo,
+            cod_curso=cod_curso
         )
 
         if inserted:
