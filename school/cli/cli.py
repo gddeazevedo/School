@@ -1,5 +1,6 @@
 import os
 from .rules import *
+from .secondary_rules import render_other_options_menu
 
 
 def start():
@@ -13,7 +14,7 @@ def start():
         '6': insert_disciplina,
         '7': inscrever_aluno,
         '8': lancar_nota,
-        '9': lambda: input('Teste')
+        '9': render_other_options_menu
     }
 
     os.system('clear')
