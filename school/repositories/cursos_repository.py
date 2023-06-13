@@ -1,5 +1,7 @@
 from ..config.db_connection_handler import DBConnectionHandler
-from ..models import Curso
+from ..models import Curso, Professor
+import sqlalchemy as sa
+from sqlalchemy.sql import func
 from typing import Optional
 
 
@@ -60,3 +62,23 @@ class CursosRepository:
             except Exception as e:
                 print(e)
                 return False
+
+    @staticmethod
+    def get_qtd_professores_ativos_by_curso():
+        with DBConnectionHandler() as db:
+            query = sa.select(Curso.cod_curso, Curso.nome, func.count(Professor.cpf))\
+                .join(Curso.professores)\
+                .where(Professor.ativo == 1).group_by(Curso.cod_curso, Curso.nome)\
+                .order_by(func.count(Professor.cpf))
+
+            return db.session.execute(query)
+
+    @staticmethod
+    def get_media_salario_by_curso():
+        with DBConnectionHandler() as db:
+            query = sa.select(Curso.cod_curso, Curso.nome, func.avg(Professor.salario))\
+                .join(Curso.professores)\
+                .group_by(Curso.cod_curso, Curso.nome)\
+                .order_by(Curso.cod_curso)
+
+            return db.session.execute(query)
