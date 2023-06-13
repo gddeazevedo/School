@@ -6,6 +6,12 @@
 docker compose up -d
 ```
 
+## Para acessar o banco
+
+```bash
+docker exec -it school_db mysql -u root -p
+```
+
 ## Para desligar o banco
 
 ```bash
@@ -24,7 +30,7 @@ python main.py
 ## Para criar migrações
 
 ```bash
-alembic revision -m "nome da migração"
+python main.py generate migration "nome da migração"
 ```
 
 ## Migrate Up
