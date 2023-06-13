@@ -1,6 +1,9 @@
+import sqlalchemy as sa
+from sqlalchemy.sql import func
 from ..config.db_connection_handler import DBConnectionHandler
-from ..models import Setor
+from ..models import Setor, Funcionario
 from typing import Optional
+
 
 
 class SetoresRepository:
@@ -9,7 +12,6 @@ class SetoresRepository:
         with DBConnectionHandler() as db:
             return db.session.query(Setor).all()
   
-
     @staticmethod
     def select_by_cod_setor(cod_setor: int) -> Setor | None:
         with DBConnectionHandler() as db:
@@ -64,3 +66,13 @@ class SetoresRepository:
             except Exception as e:
                 print(e)
                 return False
+
+    @staticmethod
+    def get_folha_pagamento_by_setor() -> tuple[str | int | float]:
+        with DBConnectionHandler() as db:
+            query = sa.select(Setor.cod_setor, Setor.nome, func.sum(Funcionario.salario))\
+                .join(Setor.funcionarios)\
+                .group_by(Setor.cod_setor, Setor.nome)\
+                .order_by(sa.desc(func.sum(Funcionario.salario)))
+
+            return db.session.execute(query)
