@@ -75,6 +75,7 @@ def seed_alunos():
         telefone = fake.msisdn()[:11]
         endereco = fake.address()
         ativo = fake.pybool()
+        cod_curso = random.randint(1, SEED)
 
         try:
             repos.AlunosRepository.insert(
@@ -82,7 +83,8 @@ def seed_alunos():
                 nome=nome,
                 telefone=telefone,
                 endereco=endereco,
-                ativo=ativo
+                ativo=ativo,
+                cod_curso=cod_curso
             )
         except Exception as e:
             print(e)
