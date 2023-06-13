@@ -7,7 +7,7 @@ class Curso(Base):
     __tablename__ = 'cursos'
 
     cod_curso = Column(Integer, primary_key=True)
-    nome = Column(String(length=50), nullable=False, unique=True)
+    nome = Column(String(length=50), nullable=False)
     ano_inicio = Column(Integer, nullable=False)
 
     professores = relationship('Professor', back_populates='curso', lazy='joined')
