@@ -1,5 +1,13 @@
 import os
+import sqlalchemy as sa
+from tabulate import tabulate
 from .. import repositories as repos
+from ..config.db_connection_handler import DBConnectionHandler
+
+
+def print_table(table: list[tuple[int | bool | str | float]]):
+    print(tabulate(table, headers='firstrow', tablefmt='fancy_grid'))
+    input('Aperte enter para voltar')
 
 
 def turma_com_mais_alunos():
@@ -8,22 +16,55 @@ def turma_com_mais_alunos():
 
 
 def professores_ativos_por_curso():
-    print('Quantidade de professores ativos por curso')
-    input()
+    '''
+    select cursos.cod_curso as cod_curso, cursos.nome as nome_curso, count(professores.cpf) as qtd_professores
+    from cursos inner join professores on professores.cod_curso = cursos.cod_curso
+    where professores.ativo = 1
+    group by cursos.cod_curso, cursos.nome
+    order by cursos.cod_curso;
+    '''
+    while True:
+        print('Quantidade de professores ativos por curso')
+        rows = repos.CursosRepository.get_qtd_professores_ativos_by_curso()
+        table = [('Cod Curso', 'Nome Curso', 'Quantidade de professores')]
+        table.extend(rows)
+        print_table(table)
+        return
 
 
 def media_salarial():
-    print(' Média salarial por curso')
-    input()
+    '''
+    select cursos.cod_curso, cursos.nome, avg(professores.salario)
+    from cursos inner join professores on cursos.cod_curso = professores.cod_curso
+    group by cursos.cod_curso, cursos.nome
+    order by cursos.cod_curso;
+    '''
+    while True:
+        print('Média salarial por curso')
+        rows = repos.CursosRepository.get_media_salario_by_curso()
+        table = [('Cod Curso', 'Nome Curso', 'Média salarial')]
+        table.extend(rows)
+        print_table(table)
+        return
 
 
 def folha_mensal_por_departamento():
-    print('Folha mensal de cada departamento (ordem descrescente)')
-    input()
+    '''
+    select setores.cod_setor, setores.nome, sum(funcionarios.salario)
+    from setores inner join funcionarios on setores.cod_setor = funcionarios.cod_setor
+    group by setores.cod_setor, setores.nome order by sum(funcionarios.salario) desc;
+    '''
+    while True:
+        print('Folha mensal de cada departamento (ordem descrescente)')
+        rows = repos.SetoresRepository.get_folha_pagamento_by_setor()
+        table = [('Cod Setor', 'Nome Setor', 'Folha de Pagamento Mensal')]
+        table.extend(rows)
+        print_table(table)
+        return
 
 
 def media_notas():
-    print('Média  final das notas por disciplina de um determinado professor')
+    print('Média final das notas por disciplina de um determinado professor')
     input()
 
 
@@ -33,13 +74,35 @@ def qtd_curso_por_prof():
 
 
 def professor_mais_antigos():
-    print('Professor mais antigo da instituição')
-    input()
+    '''
+    select cpf, nome, data_contratacao from professores as p1
+    where data_contratacao < all (
+        select data_contratacao from professores as p2 where p1.cpf <> p2.cpf
+    );
+    '''
+    while True:
+        print('Professor mais antigo da instituição')
+        row = repos.ProfessoresRepository.get_professor_mais_antigo()
+        table = [('CPF', 'Nome', 'Data Contratação')]
+        table.extend(row)
+        print_table(table)
+        return
 
 
 def alunos_por_curso():
-    print('Número total de alunos por curso')
-    input()
+    '''
+    select cursos.cod_curso, cursos.nome, count(alunos.cpf)
+    from cursos inner join alunos on cursos.cod_curso = alunos.cod_curso
+    group by cursos.cod_curso, cursos.nome
+    order by count(alunos.cpf);
+    '''
+    while True:
+        print('Número total de alunos por curso')
+        rows = repos.CursosRepository.get_qtd_alunos_by_curso()
+        table = [('Cod Curso', 'Nome Curso', 'Quantidade de Alunos')]
+        table.extend(rows)
+        print_table(table)
+        return
 
 
 def aprovados_reprovados():
@@ -81,5 +144,8 @@ def render_other_options_menu():
             os.system('clear')
             eval(options[option])
             os.system('clear')
-        except:
+        except Exception as e:
+            os.system('clear')
+            print(e)
+            input('Aperte enter para voltar')
             return
