@@ -1,6 +1,7 @@
+import datetime
+import sqlalchemy as sa
 from ..config.db_connection_handler import DBConnectionHandler
 from ..models import Professor
-import datetime
 
 
 class ProfessoresRepository:
@@ -63,3 +64,13 @@ class ProfessoresRepository:
             except Exception as e:
                 print(e)
                 return False
+
+    @staticmethod
+    def get_professor_mais_antigo() -> Professor | None:
+        with DBConnectionHandler() as db:
+            query = sa.select(Professor.cpf, Professor.nome, Professor.data_contratacao)\
+                .where(Professor.data_contratacao <= sa.all_(
+                    sa.select(Professor.data_contratacao).scalar_subquery()
+                ))
+
+            return db.session.execute(query)
