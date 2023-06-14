@@ -1,6 +1,6 @@
-from ..config.db_connection_handler import DBConnectionHandler
-from ..models import Curso, Professor
 import sqlalchemy as sa
+from ..config.db_connection_handler import DBConnectionHandler
+from ..models import Curso, Professor, Aluno
 from sqlalchemy.sql import func
 from typing import Optional
 
@@ -80,5 +80,15 @@ class CursosRepository:
                 .join(Curso.professores)\
                 .group_by(Curso.cod_curso, Curso.nome)\
                 .order_by(Curso.cod_curso)
+
+            return db.session.execute(query)
+
+    @staticmethod
+    def get_qtd_alunos_by_curso():
+        with DBConnectionHandler() as db:
+            query = sa.select(Curso.cod_curso, Curso.nome, func.count(Aluno.cpf))\
+                .join(Curso.alunos)\
+                .group_by(Curso.cod_curso, Curso.nome)\
+                .order_by(func.count(Aluno.cpf))
 
             return db.session.execute(query)
