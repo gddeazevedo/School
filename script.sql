@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS professores (
     nome VARCHAR(50) NOT NULL,
     telefone VARCHAR(11) NOT NULL,
     endereco VARCHAR(100) NOT NULL,
-    data_contratacao DATETIME NOT NULL,
+    data_contratacao DATE NOT NULL,
     salario FLOAT NOT NULL,
     ativo BOOLEAN NOT NULL,
     cod_curso INT NOT NULL,
