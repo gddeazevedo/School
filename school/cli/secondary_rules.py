@@ -11,8 +11,24 @@ def print_table(table: list[tuple[int | bool | str | float]]):
 
 
 def turma_com_mais_alunos():
-    print('Turma com mais alunos')
-    input()
+    '''
+    select nome, count(cpf_aluno)
+    from disciplinas as d inner join inscritos as i
+    on i.cod_disciplina = d.cod_disciplina
+    group by nome having count(cpf_aluno) >= all (
+        select count(cpf_aluno)
+        from disciplinas inner join inscritos
+        on inscritos.cod_disciplina = disciplinas.cod_disciplina
+        group by nome
+    );
+    '''
+    while True:
+        print('Turma com mais alunos')
+        rows = repos.DisciplinasRepository.get_with_mais_inscritos()
+        table = [('Nome Disciplina', 'Quantidade de alunos')]
+        table.extend(rows)
+        print_table(table)
+        return
 
 
 def professores_ativos_por_curso():
