@@ -44,3 +44,15 @@ python main.py migrate up
 ```bash
 python main.py migrate down
 ```
+
+## Para popular o banco de dados
+
+```bash
+python main.py seed
+```
+
+## Para rodar a aplicação
+
+```bash
+python main.py start
+```
