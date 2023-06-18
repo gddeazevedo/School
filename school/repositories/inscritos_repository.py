@@ -43,7 +43,7 @@ class InscritosRepository:
             try:
                 db.session.query(Inscrito)\
                     .filter(
-                        Inscrito.cod_disciplina == cod_disciplina and Inscrito.cpf_aluno == cpf_aluno
+                        sa.and_(Inscrito.cod_disciplina == cod_disciplina, Inscrito.cpf_aluno == cpf_aluno)
                     )\
                     .update(new_values)
                 db.session.commit()
@@ -57,8 +57,9 @@ class InscritosRepository:
         with DBConnectionHandler() as db:
             try:
                 db.session.query(Inscrito)\
-                    .filter(Inscrito.cod_disciplina == cod_disciplina and Inscrito.cpf_aluno == cpf_aluno)\
-                    .delete()
+                    .filter(
+                        sa.and_(Inscrito.cod_disciplina == cod_disciplina,Inscrito.cpf_aluno == cpf_aluno)
+                    ).delete()
                 db.session.commit()
                 return True
             except Exception as e:
