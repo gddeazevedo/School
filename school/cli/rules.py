@@ -375,7 +375,6 @@ def lancar_nota():
             print('Nota inválida! Tente novamente!')
             nota = float(input('Digite a nota: '))
 
-
         inscrito = repos.InscritosRepository.select_by_cpf_aluno_and_cod_disciplina(
             cpf_aluno=cpf_aluno, cod_disciplina=cod_disciplina
         )

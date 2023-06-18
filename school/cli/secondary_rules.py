@@ -158,8 +158,6 @@ def aprovados_reprovados():
 
 
 def render_other_options_menu():
-    print('Mais opções')
-
     options = {
         '0': 'raise',
         '1': 'turma_com_mais_alunos()',
@@ -175,6 +173,7 @@ def render_other_options_menu():
 
     while True:
         try:
+            print('Mais opções')
             print('0) Voltar')
             print('1) Turmas com mais alunos')
             print('2) Quantidade de professores ativos por curso')
@@ -193,6 +192,4 @@ def render_other_options_menu():
             os.system('clear')
         except Exception as e:
             os.system('clear')
-            print(e)
-            input('Aperte enter para voltar')
             return
