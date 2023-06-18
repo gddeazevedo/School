@@ -287,6 +287,56 @@ def inscrever_aluno():
                 return
 
 
+def cancelar_inscricao():
+    while True:
+        print('Cancelar inscrição')
+
+        while True:
+            cod_disciplina = int(input('Digite o código da disciplina: '))
+            disciplina = repos.DisciplinasRepository.select_by_cod_disciplina(cod_disciplina)
+
+            if disciplina == None:
+                print('Disciplina inexistente! Tente novamente')
+            else:
+                break
+
+        while True:
+            cpf_aluno = input('Digite o CPF do aluno: ')
+
+            if len(cpf_aluno) != 11:
+                print('CPF inválido! Tente novamente')
+                continue
+
+            aluno = repos.AlunosRepository.select_by_cpf(cpf_aluno)
+
+            if aluno == None:
+                print('Aluno inexistente! Por favor tente novamente!')
+            else:
+                if not aluno.ativo:
+                    print('Aluno não está mais ativo!')
+                    input('Aperte enter para continuar!')
+                    os.system('clear')
+                    return
+                break
+
+        inscrito = repos.InscritosRepository.select_by_cpf_aluno_and_cod_disciplina(
+            cpf_aluno=cpf_aluno, cod_disciplina=cod_disciplina
+        )
+
+        if inscrito == None:
+            input('Este aluno não está inscrito nesta disciplina! Por favor, tente novamente!')
+            os.system('clear')
+            continue
+
+        if repos.InscritosRepository.delete(cpf_aluno, cod_disciplina):
+            print('Aluno removido da disciplina com sucesso!')
+            input('Aperte enter para voltar! ')
+            return
+        else:
+            print('Erro ao remover o aluno da disciplina!')
+            input('Aperte enter para tentar de novo!')
+
+
 def lancar_nota():
     while True:
         print('Lançar nota')

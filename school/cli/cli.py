@@ -13,8 +13,9 @@ def start():
         '5': insert_aluno,
         '6': insert_disciplina,
         '7': inscrever_aluno,
-        '8': lancar_nota,
-        '9': render_other_options_menu
+        '8': cancelar_inscricao,
+        '9': lancar_nota,
+        '10': render_other_options_menu
     }
 
     os.system('clear')
@@ -29,8 +30,9 @@ def start():
         print('5) Cadastrar aluno')
         print('6) Cadastrar disciplina')
         print('7) Inscrever aluno em disciplina')
-        print('8) Lançar nota')
-        print('9) Mais opções')
+        print('8) Cancelar inscrição do aluno')
+        print('9) Lançar nota')
+        print('10) Mais opções')
 
         option = input('Escolha uma opção para continuar: ')
 
