@@ -64,8 +64,27 @@ def folha_mensal_por_departamento():
 
 
 def media_notas():
-    print('Média final das notas por disciplina de um determinado professor')
-    input()
+    '''
+    create temporary table t2 (
+        select professores.nome as nome_p, cod_disciplina, disciplinas.nome as nome_d
+        from professores inner join disciplinas
+        on cpf = cpf_professor
+        where cpf = 11111111111
+    );
+
+    select nome_p, nome_d, avg(nota) as media
+    from t2 inner join inscritos
+    on t2.cod_disciplina = inscritos.cod_disciplina
+    group by nome_p, nome_d;
+    '''
+    while True:
+        print('Média final das notas por disciplina de um determinado professor')
+        cpf_professor = input('Digite o CPF do professor: ')
+        rows = repos.ProfessoresRepository.get_media_notas(cpf_professor)
+        table = [('Nome Profesor', 'Nome Disciplina', 'Média das notas')]
+        table.extend(rows)
+        print_table(table)
+        return
 
 
 def qtd_curso_por_prof():

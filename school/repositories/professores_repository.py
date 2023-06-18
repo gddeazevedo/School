@@ -1,7 +1,8 @@
 import datetime
 import sqlalchemy as sa
+from sqlalchemy.sql import func
 from ..config.db_connection_handler import DBConnectionHandler
-from ..models import Professor
+from ..models import Professor, Disciplina, Inscrito
 
 
 class ProfessoresRepository:
@@ -74,3 +75,20 @@ class ProfessoresRepository:
                 ))
 
             return db.session.execute(query)
+
+    @staticmethod
+    def get_media_notas(cpf_professor: str):
+        with DBConnectionHandler() as db:
+            try:
+                subquery = sa.select(Professor.nome, Disciplina.cod_disciplina, Disciplina.nome)\
+                    .join(Professor.disciplinas)\
+                    .where(Professor.cpf == cpf_professor).subquery()
+
+                query = sa.select(subquery.c.nome,subquery.c.nome_1, func.avg(Inscrito.nota))\
+                    .join(Inscrito, subquery.c.cod_disciplina == Inscrito.cod_disciplina)\
+                    .group_by(subquery.c.nome, subquery.c.nome_1)
+
+                return db.session.execute(query)
+            except Exception as e:
+                print(e)
+                return None
