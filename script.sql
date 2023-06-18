@@ -66,3 +66,17 @@ CREATE TABLE IF NOT EXISTS inscritos (
     CONSTRAINT cpf_aluno_fk FOREIGN KEY (cpf_aluno) REFERENCES alunos(cpf) ON DELETE CASCADE,
     PRIMARY KEY (cod_disciplina, cpf_aluno)
 );
+
+
+DELIMITER $
+
+CREATE TRIGGER tgr_inativar_aluno AFTER UPDATE
+ON inscritos
+FOR EACH ROW
+BEGIN
+    IF new.vez > 3 THEN
+        UPDATE alunos SET ativo = FALSE;
+    END IF;
+END$
+
+DELIMITER ;
