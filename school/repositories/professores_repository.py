@@ -2,7 +2,7 @@ import datetime
 import sqlalchemy as sa
 from sqlalchemy.sql import func
 from ..config.db_connection_handler import DBConnectionHandler
-from ..models import Professor, Disciplina, Inscrito
+from ..models import Professor, Disciplina, Inscrito, CursoDisciplina
 
 
 class ProfessoresRepository:
@@ -92,3 +92,14 @@ class ProfessoresRepository:
             except Exception as e:
                 print(e)
                 return None
+
+    @staticmethod
+    def get_qtd_cursos_by_professor():
+        with DBConnectionHandler() as db:
+            query = sa.select(Professor.cpf, Professor.nome, func.count(CursoDisciplina.cod_curso))\
+                .join(Professor.disciplinas)\
+                .join(CursoDisciplina, CursoDisciplina.cod_disciplina == Disciplina.cod_disciplina)\
+                .group_by(Professor.cpf, Professor.nome)\
+                .order_by(func.count(CursoDisciplina.cod_curso), Professor.nome)
+            return db.session.execute(query)
+            print(query)

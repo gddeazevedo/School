@@ -104,8 +104,20 @@ def media_notas():
 
 
 def qtd_curso_por_prof():
-    print('Quantidade de cursos que um determinado professor trabalha')
-    input()
+    '''
+    select professores.nome, professores.cpf, count(cod_curso) as qtd_cursos
+    from professores inner join disciplinas on professores.cpf = disciplinas.cpf_professor
+    inner join cursos_disciplinas
+    group by professores.nome, professores.cpf
+    order by qtd_cursos, professor.nome;
+    '''
+    while True:
+        print('Quantidade de cursos que cada professor trabalha')
+        rows = repos.ProfessoresRepository.get_qtd_cursos_by_professor()
+        table = [('CPF Professor', 'Nome Professor', 'Quantidade de Cursos')]
+        table.extend(rows)
+        print_table(table)
+        return
 
 
 def professor_mais_antigos():
@@ -169,7 +181,7 @@ def render_other_options_menu():
             print('3) Média salarial por curso')
             print('4) Folha mensal de cada departamento (ordem descrescente)')
             print('5) Média final das notas por disciplina de um determinado professor')
-            print('6) Quantidade de cursos que um determinado professor trabalha')
+            print('6) Quantidade de cursos que cada professor trabalha')
             print('7) Professor mais antigo da instituição')
             print('8) Número total de alunos por curso')
             print('9) Disciplinas com mais aprovados e reprovados em um determinado período')
