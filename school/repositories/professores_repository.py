@@ -102,4 +102,3 @@ class ProfessoresRepository:
                 .group_by(Professor.cpf, Professor.nome)\
                 .order_by(func.count(CursoDisciplina.cod_curso), Professor.nome)
             return db.session.execute(query)
-            print(query)

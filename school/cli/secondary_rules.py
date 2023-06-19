@@ -85,7 +85,7 @@ def media_notas():
         select professores.nome as nome_p, cod_disciplina, disciplinas.nome as nome_d
         from professores inner join disciplinas
         on cpf = cpf_professor
-        where cpf = 11111111111
+        where cpf = :cpf
     );
 
     select nome_p, nome_d, avg(nota) as media

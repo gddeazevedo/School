@@ -64,17 +64,6 @@ class DisciplinasRepository:
 
     @staticmethod
     def get_with_mais_inscritos():
-        '''
-        select nome, count(cpf_aluno)
-        from disciplinas as d inner join inscritos as i
-        on i.cod_disciplina = d.cod_disciplina
-        group by nome having count(cpf_aluno) >= all (
-            select count(cpf_aluno)
-            from disciplinas inner join inscritos
-            on inscritos.cod_disciplina = disciplinas.cod_disciplina
-            group by nome
-        );
-        '''
         with DBConnectionHandler() as db:
             try:
                 query = sa.select(Disciplina.nome, func.count(Inscrito.cpf_aluno))\
@@ -86,7 +75,6 @@ class DisciplinasRepository:
                             .group_by(Disciplina.nome).scalar_subquery()
                     ))
 
-                # print(query)
                 return db.session.execute(query)
             except Exception as e:
                 print(e)

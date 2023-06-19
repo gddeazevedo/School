@@ -36,7 +36,7 @@ class InscritosRepository:
             except Exception as e:
                 print(e)
                 return False
-    
+
     @staticmethod
     def update(cpf_aluno: str, cod_disciplina: int, **new_values) -> bool:
         with DBConnectionHandler() as db:
