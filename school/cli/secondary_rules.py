@@ -105,11 +105,11 @@ def media_notas():
 
 def qtd_curso_por_prof():
     '''
-    select professores.nome, professores.cpf, count(cod_curso) as qtd_cursos
+    select professores.nome, professores.cpf, count(cursos_disciplinas.cod_curso) as qtd_cursos
     from professores inner join disciplinas on professores.cpf = disciplinas.cpf_professor
     inner join cursos_disciplinas
     group by professores.nome, professores.cpf
-    order by qtd_cursos, professor.nome;
+    order by qtd_cursos, professores.nome;
     '''
     while True:
         print('Quantidade de cursos que cada professor trabalha')
