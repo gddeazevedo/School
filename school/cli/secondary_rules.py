@@ -81,7 +81,7 @@ def folha_mensal_por_departamento():
 
 def media_notas():
     '''
-    create temporary table t2 (
+    create temporary table t (
         select professores.nome as nome_p, cod_disciplina, disciplinas.nome as nome_d
         from professores inner join disciplinas
         on cpf = cpf_professor
@@ -89,8 +89,8 @@ def media_notas():
     );
 
     select nome_p, nome_d, avg(nota) as media
-    from t2 inner join inscritos
-    on t2.cod_disciplina = inscritos.cod_disciplina
+    from t inner join inscritos
+    on t.cod_disciplina = inscritos.cod_disciplina
     group by nome_p, nome_d;
     '''
     while True:
